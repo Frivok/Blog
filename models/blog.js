@@ -22,16 +22,9 @@ const blogSchema = new Schema(
       required: true,
       unique: true,
     },
-    date: {
-      type: Date,
-      default: Date.parse,
-    },
   },
   {
-    timestamps: {
-      type: Date,
-      default: Date.now,
-    },
+    timestamps: {},
   }
 );
 

@@ -58,10 +58,25 @@ const blog_delete = (req, res) => {
     });
 };
 
+const blog_search = (req, res) => {
+  const query = req.query.search;
+
+  if (!query || query.length < 1) {
+    res.json([]);
+    return;
+  }
+
+  Blog.find({ title: { $regex: new RegExp("^" + query, "i") } })
+    .limit(5)
+    .then((result) => res.json(result))
+    .catch((err) => console.log(err));
+};
+
 module.exports = {
   blog_index,
   blog_details,
   blog_create_get,
   blog_create_post,
   blog_delete,
+  blog_search,
 };

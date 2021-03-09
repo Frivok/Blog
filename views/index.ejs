@@ -3,17 +3,26 @@
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-8 col-xs-12 maincolumn">
-      <h2>Tout les chapitres</h2>
-      <% if (blogs.length > 0) { %> <% blogs.forEach(blog => { %>
-      <a class="single" href="/blogs/<%= blog.slug %>">
-        <h3 class="title"><%= blog.title %></h3>
-        <p class="body"><%= blog.body %></p>
-      </a>
-      <% }) %> <% } else { %>
-      <p>Il n'y as pas de blogs à afficher</p>
-      <% } %>
+      <div class="wave-container">
+        <h2>Tout les chapitres</h2>
+        <% if (blogs.length > 0) { %> <% blogs.forEach(blog => { %>
+
+        <h3 class="title">
+          <a class="single" href="/blogs/<%= blog.slug %>">
+            <%= blog.title %>
+          </a>
+        </h3>
+        <p class="text-dark">
+          <% if (blog.body.length > 100 ) { %> <%= blog.body.substring(0, 100) +
+          " (...)" %> <% } else { %> <%= blog.body %> <% } %>
+        </p>
+        <% }) %> <% } else { %>
+        <p>Il n'y as pas de blogs à afficher</p>
+        <% } %>
+      </div>
+
+      <%- include('./partials/rightside.ejs') %>
     </div>
-    <%- include('./partials/rightside.ejs') %>
   </div>
+  <%- include("./partials/footer.ejs") %>
 </div>
-<%- include("./partials/footer.ejs") %>

@@ -158,3 +158,10 @@ textarea {
     font-size: 18px;
   }
 }
+
+.wave-container {
+  position: relative;
+  color: #fff;
+  text-align: center;
+  overflow: hidden;
+}
