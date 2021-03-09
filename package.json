@@ -1,26 +1,25 @@
 {
-  "name": "first_project",
+  "name": "translation-blog",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
-  "directories": {
-    "doc": "docs"
-  },
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "ssh://git@ssh.nycticorax.org:666/frivoc/node.js-crash-course.git"
+    "start": "nodemon app.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "ejs": "^3.1.5",
+    "@material-ui/core": "^4.11.3",
+    "bootstrap": "^5.0.0-beta2",
+    "ejs": "^3.1.6",
     "express": "^4.17.1",
-    "lodash": "^4.17.20",
-    "mongoose": "^5.10.11",
+    "lodash": "^4.17.21",
+    "materialize-css": "^1.0.0-rc.2",
+    "mongoose": "^5.11.18",
+    "mongoose-slug-generator": "^1.0.4",
+    "mongoose-slug-updater": "^3.3.0",
+    "mongoose-url-slugs": "^1.0.2",
     "morgan": "^1.10.0"
   }
 }

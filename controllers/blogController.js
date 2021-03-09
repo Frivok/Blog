@@ -1,59 +1,67 @@
-const Blog = require('../models/blog');
-// blog_index, blog_details, blog_create, blog_create_poste, blog_delete
+const Blog = require("../models/blog");
 
 const blog_index = (req, res) => {
-  Blog.find().sort({ createdAt: -1 })
-  .then((result) => {
-res.render('blogs/index', { title: 'All Blogs', blogs: result})
-  })
-  .catch((err) => {
-    console.log(err)
-  })
-}
+  Blog.find()
+    .sort({ createdAt: -1 })
+    .then((result) => {
+      res.render("index", { title: "All Blogs", blogs: result });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.redirect("/404");
+    });
+};
 
-const blog_details = (req,res) => {
-  const id = req.params.id;
-Blog.findById(id)
-.then(result => {
-  res.render('blogs/details', { blog: result, title: 'Blog Details'});
-})
-.catch(err => {
-  res.status(404).render('404', { title: 'Blog not found' });
-});
-}
+const blog_details = (req, res) => {
+  // request slug using parameters(params)
+  const slug = req.params.slug;
 
-const blog_create_get = (req,res) => {
-  res.render('blogs/create', { title: 'Create a new Blog'});
-}
+  Blog.findOne({ slug: slug })
+    .then((result) => {
+      res.render("details", { blog: result, title: "Blog Details" });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(404).render("404", { title: "Blog not found" });
+    });
+};
 
-const blog_create_post = (req,res) => {
-const blog = new Blog(req.body)
+const blog_create_get = (req, res) => {
+  res.render("create", { title: "Create a new Blog" });
+};
 
-blog.save()
-.then(result => {
-  res.redirect('/blogs')
-})
-.catch(err => {
-  console.log(err)
-})
-}
+const blog_create_post = (req, res) => {
+  //make a copy of the Blog schema (the body)
+  let blog = new Blog(req.body);
+  blog.slug = blog.title.replace(" ", "-").toLowerCase();
 
-const blog_delete = (req,res) => {
-  const id = req.params.id;
+  blog
+    .save()
+    .then((result) => {
+      res.location(`/blogs/${blog.slug}`);
+      res.status(301).send(null);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.redirect("/404");
+    });
+};
 
-  Blog.findByIdAndDelete(id)
-  .then(result => {
-    res.json({ redirect: '/blogs' })
-  })
-  .catch(err => {
-    console.log(err);
-  })
-}
+const blog_delete = (req, res) => {
+  const slug = req.params.slug;
+  Blog.findOneAndDelete({ slug: slug })
+    .then((result) => {
+      res.json({ redirect: "/blogs" });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
 module.exports = {
   blog_index,
   blog_details,
   blog_create_get,
   blog_create_post,
-  blog_delete
-}
+  blog_delete,
+};
